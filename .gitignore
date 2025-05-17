@@ -1,0 +1,21 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# VSCode settings
+.vscode/
+
+# Virtual environment
+venv/
+
+# Environment variables
+.env
+
+# API keys or sensitive files
+twitter api key and api.txt
+
+# Data batches or output files
+tweets/
+*.csv
+*.json
+*.parquet
