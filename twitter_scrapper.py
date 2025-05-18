@@ -79,7 +79,8 @@ def save_to_local_and_hdfs(tweets, batch_num):
     # Save to local file
     filename = f"tweets/disaster_tweets_batch_{batch_num}.json"
     with open(filename, 'w') as f:
-        json.dump(tweets, f)
+        for tweet in tweets:
+            f.write(json.dumps(tweet) + '\n')
     
     print(f"Saved batch {batch_num} with {len(tweets)} tweets to {filename}")
     
