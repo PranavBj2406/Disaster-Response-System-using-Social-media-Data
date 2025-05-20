@@ -1,0 +1,1 @@
+C:\hadoop\etc\hadoop;C:\hadoop\share\hadoop\common;C:\hadoop\share\hadoop\common\lib\*;C:\hadoop\share\hadoop\common\*;C:\hadoop\share\hadoop\hdfs;C:\hadoop\share\hadoop\hdfs\lib\*;C:\hadoop\share\hadoop\hdfs\*;C:\hadoop\share\hadoop\yarn;C:\hadoop\share\hadoop\yarn\lib\*;C:\hadoop\share\hadoop\yarn\*;C:\hadoop\share\hadoop\mapreduce\*

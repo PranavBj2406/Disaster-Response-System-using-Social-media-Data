@@ -1,11 +1,12 @@
 from faker import Faker
 import random
-import json
+import csv
 import time
 import os
 from datetime import datetime
 import subprocess
 import shutil
+import io
 
 fake = Faker()
 
@@ -48,11 +49,12 @@ def generate_disaster_tweet():
         "location": location,
         "disaster_type": disaster,
         "severity": severity,
-        "coordinates": {"lat": lat, "lng": lng},
+        "lat": lat,
+        "lng": lng,
         "timestamp": timestamp,
         "user_id": fake.uuid4(),
         "retweet_count": random.randint(0, 1000),
-        "verified_report": random.random() < 0.3  # 30% chance of being from verified source
+        "verified_report": 1 if random.random() < 0.3 else 0  # 30% chance of being from verified source, as 1/0 for CSV
     }
 
 def check_hadoop_available():
@@ -71,16 +73,22 @@ def check_hadoop_available():
         return False, hadoop_cmd
 
 def save_to_local_and_hdfs(tweets, batch_num):
-    """Save tweets to local file and optionally to HDFS if available"""
+    """Save tweets to local file in CSV format and optionally to HDFS if available"""
     # Create directory if it doesn't exist
     if not os.path.exists("tweets"):
         os.makedirs("tweets")
     
-    # Save to local file
-    filename = f"tweets/disaster_tweets_batch_{batch_num}.json"
-    with open(filename, 'w') as f:
+    # Define CSV headers based on tweet structure
+    headers = ["text", "location", "disaster_type", "severity", "lat", "lng", 
+               "timestamp", "user_id", "retweet_count", "verified_report"]
+    
+    # Save to local file as CSV
+    filename = f"tweets/disaster_tweets_batch_{batch_num}.csv"
+    with open(filename, 'w', newline='', encoding='utf-8') as f:
+        writer = csv.DictWriter(f, fieldnames=headers)
+        writer.writeheader()
         for tweet in tweets:
-            f.write(json.dumps(tweet) + '\n')
+            writer.writerow(tweet)
     
     print(f"Saved batch {batch_num} with {len(tweets)} tweets to {filename}")
     
@@ -116,7 +124,7 @@ def main():
     batch_interval = 30  # Seconds between batches
     max_batches = 10  # Set to None for continuous operation
     
-    print(f"Starting tweet generator. Press Ctrl+C to stop.")
+    print(f"Starting CSV tweet generator. Press Ctrl+C to stop.")
     print(f"Generating {batch_size} tweets every {batch_interval} seconds.")
     
     # Check for Hadoop at startup
