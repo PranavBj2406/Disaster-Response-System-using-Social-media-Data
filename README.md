@@ -45,6 +45,11 @@ This system bridges the gap between public information and institutional respons
 - **Python / Shell Scripting**
 
 ---
+## Outputs of the Project 
+![Screenshot (134)](https://github.com/user-attachments/assets/e7a199f2-13b7-467c-83a8-cbf6ff9c6a66)
+![Screenshot (133)](https://github.com/user-attachments/assets/bd2f2a8b-d2e4-4038-a995-00ef6f8a3a33)
+
+
 
 ## 🤝 Contribution
 
